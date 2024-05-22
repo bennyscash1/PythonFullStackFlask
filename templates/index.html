@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Test Input</title>
+    <script>
+        function addFieldPair() {
+            const container = document.getElementById('dynamic-fields');
+            const pairDiv = document.createElement('div');
+            pairDiv.className = 'field-pair';
+
+            const xpathLabel = document.createElement('label');
+            xpathLabel.textContent = 'XPath:';
+            pairDiv.appendChild(xpathLabel);
+
+            const xpathInput = document.createElement('input');
+            xpathInput.type = 'text';
+            xpathInput.name = 'xpathField[]';
+            pairDiv.appendChild(xpathInput);
+
+            const inputLabel = document.createElement('label');
+            inputLabel.textContent = 'Input:';
+            pairDiv.appendChild(inputLabel);
+
+            const stringInput = document.createElement('input');
+            stringInput.type = 'text';
+            stringInput.name = 'inputString[]';
+            pairDiv.appendChild(stringInput);
+
+            container.appendChild(pairDiv);
+        }
+
+        function addXpathField() {
+            const container = document.getElementById('dynamic-fields');
+            const xpathDiv = document.createElement('div');
+            xpathDiv.className = 'field-single';
+
+            const xpathLabel = document.createElement('label');
+            xpathLabel.textContent = 'XPath:';
+            xpathDiv.appendChild(xpathLabel);
+
+            const xpathInput = document.createElement('input');
+            xpathInput.type = 'text';
+            xpathInput.name = 'xpathClick[]';
+            xpathDiv.appendChild(xpathInput);
+
+            container.appendChild(xpathDiv);
+        }
+    </script>
+</head>
+<body>
+    <h1>Enter Test Data</h1>
+    <form method="post">
+        <label for="BaseUrl">Base URL:</label>
+        <input type="text" id="BaseUrl" name="BaseUrl" required><br><br>
+
+        <div id="dynamic-fields"></div>
+
+        <button type="button" onclick="addFieldPair()">Add XPath and Input</button>
+        <button type="button" onclick="addXpathField()">Add XPath Only</button><br><br>
+
+        <input type="submit" value="Run Test">
+    </form>
+</body>
+</html>
