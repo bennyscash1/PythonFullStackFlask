@@ -27,6 +27,14 @@
             stringInput.name = 'inputString[]';
             pairDiv.appendChild(stringInput);
 
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                container.removeChild(pairDiv);
+            };
+            pairDiv.appendChild(deleteButton);
+
             container.appendChild(pairDiv);
         }
 
@@ -44,6 +52,38 @@
             xpathInput.name = 'xpathClick[]';
             xpathDiv.appendChild(xpathInput);
 
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                container.removeChild(xpathDiv);
+            };
+            xpathDiv.appendChild(deleteButton);
+
+            container.appendChild(xpathDiv);
+        }
+        function addXpathAssert() {
+            const container = document.getElementById('dynamic-fields');
+            const xpathDiv = document.createElement('div');
+            xpathDiv.className = 'field-single';
+
+            const xpathLabel = document.createElement('label');
+            xpathLabel.textContent = 'XPath:';
+            xpathDiv.appendChild(xpathLabel);
+
+            const xpathInput = document.createElement('input');
+            xpathInput.type = 'text';
+            xpathInput.name = 'xpathAssert[]';
+            xpathDiv.appendChild(xpathInput);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                container.removeChild(xpathDiv);
+            };
+            xpathDiv.appendChild(deleteButton);
+
             container.appendChild(xpathDiv);
         }
     </script>
@@ -58,8 +98,12 @@
 
         <button type="button" onclick="addFieldPair()">Add XPath and Input</button>
         <button type="button" onclick="addXpathField()">Add XPath Only</button><br><br>
+        <button type="button" onclick="addXpathAssert()">Add XPath Assert</button><br><br>
 
         <input type="submit" value="Run Test">
     </form>
+    <div id="test-result">
+        {{ result|safe }}
+    </div>
 </body>
 </html>

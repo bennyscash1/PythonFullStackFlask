@@ -19,13 +19,15 @@ class LoginPage(BasePages):
     ##Input data
     def enter_string(self, xpath, textInput):
         locator = (By.XPATH, xpath)
-        self.fill_text(locator, textInput)
-        return self
+        return self.fill_text(locator, textInput)
     
     def clickButtonByXpath(self, xpath):
         locator = (By.XPATH, xpath)
-        self.click(locator)
-        return self
+        return self.click(locator)
+    
+    def assertXpath(self, xpath):
+        locator = (By.XPATH, xpath)
+        return self.is_element_found(locator)
     ##
     def enter_email(self, email):
         self.fill_text(self.m_user_name_input_field, email)

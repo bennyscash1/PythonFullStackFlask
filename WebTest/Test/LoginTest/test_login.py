@@ -27,18 +27,24 @@ class TestLoginWeb(WebDriverFactory):
 
         index = 1
         while index < len(userinputs):
-            xpath = userinputs[index]
-            if index + 1 < len(userinputs) and not userinputs[index + 1].startswith('/'):
-                input_value = userinputs[index + 1]
+            locatorsX = userinputs[index]
+            if locatorsX.startswith('InputXpath'):
+                xpath = locatorsX.split(": ")[1].split(", ")[0]
+                input_value = locatorsX.split(": ")[1].split(", ")[1]
                 if input_value:  # Non-empty input value indicates a text entry
-                    self.login_page.enter_string(xpath, input_value)
-                    index += 2
+                    ret = self.login_page.enter_string(xpath, input_value)
+                    index += 1
                 # else:
                 #     self.login_page.clickButtonByXpath(xpath)
                 #     index += 1
-            else:
-                self.login_page.clickButtonByXpath(xpath)
-                index += 1
+                elif locatorsX.startswith('ButtonAction'):
+                    xpath = locatorsX.split(": ")[1]
+                    self.login_page.clickButtonByXpath(xpath)
+                    index += 1
+                elif locatorsX.startswith('AssertXpath'):
+                    xpath = locatorsX.split(": ")[1]
+                    self.login_page.assertXpath(xpath)
+                    index += 1
 
     # def teardown_method(self):
     #     # Do not close the browser here
