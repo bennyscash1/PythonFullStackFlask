@@ -21,13 +21,14 @@ def index():
         
         test_dir = os.path.join(os.path.dirname(__file__), 'WebTest', 'Test', 'LoginTest')
         os.makedirs(test_dir, exist_ok=True)
+
         with open(os.path.join(test_dir, 'user_inputs.txt'), 'w') as f:
             f.write(f"{base_url}\n")
             for xpath, string in zip(xpath_fields, input_strings):
                 f.write(f"InputXpath: {xpath}, {string}\n")
             for xpath_click in xpath_clicks:
                 f.write(f"ButtonAction: {xpath_click}\n")
-            for xpath_click in xpath_clicks:
+            for xpath_assert in xpath_assert:
                 f.write(f"AssertXpath: {xpath_assert}\n")
 
 
@@ -50,9 +51,10 @@ def index():
         stderr_output = stderr.getvalue()
 
         result = f"<pre>{stdout_output}</pre><br><pre>{stderr_output}</pre>"
+        
         # Display the result on the webpage
 
-    return render_template('index.html', result=result)
+    return render_template('indexp.html', result=result)
 
 if __name__ == '__main__':
     app.run(debug=True)

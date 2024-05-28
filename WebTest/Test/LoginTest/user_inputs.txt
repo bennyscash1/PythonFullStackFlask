@@ -1,2 +1,2 @@
-https://www.google.com/
-InputXpath: //textarea[@id='APjFqb'], hotel
+https://practicetestautomation.com/practice-test-login/
+InputXpath: //input[@id='username'], student

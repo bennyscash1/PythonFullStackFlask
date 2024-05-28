@@ -14,7 +14,7 @@ from WebTest.WebInfra.web_driver_factory import WebDriverFactory
 
 class TestLoginWeb(WebDriverFactory):
     def setup_method(self):
-        super().__init__()
+       # super().__init__()
         self.login_page = LoginPage(self.driver)
 
     @pytest.mark.webtest    
@@ -28,23 +28,30 @@ class TestLoginWeb(WebDriverFactory):
         index = 1
         while index < len(userinputs):
             locatorsX = userinputs[index]
-            if locatorsX.startswith('InputXpath'):
+            
+            # Handling InputXpath
+            if  locatorsX is not None:
                 xpath = locatorsX.split(": ")[1].split(", ")[0]
-                input_value = locatorsX.split(": ")[1].split(", ")[1]
-                if input_value:  # Non-empty input value indicates a text entry
+                
+                if locatorsX.startswith('InputXpath') :
+                    input_value = locatorsX.split(": ")[1].split(", ")[1]# Non-empty input value indicates a text entry
                     ret = self.login_page.enter_string(xpath, input_value)
                     index += 1
-                # else:
-                #     self.login_page.clickButtonByXpath(xpath)
-                #     index += 1
+
+                # Handling ButtonAction
                 elif locatorsX.startswith('ButtonAction'):
                     xpath = locatorsX.split(": ")[1]
                     self.login_page.clickButtonByXpath(xpath)
                     index += 1
+
+                # Handling AssertXpath
                 elif locatorsX.startswith('AssertXpath'):
                     xpath = locatorsX.split(": ")[1]
                     self.login_page.assertXpath(xpath)
                     index += 1
+
+                # else:
+
 
     # def teardown_method(self):
     #     # Do not close the browser here
