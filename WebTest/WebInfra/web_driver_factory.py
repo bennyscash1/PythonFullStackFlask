@@ -59,8 +59,8 @@ class WebDriverFactory:
     #     driver = webdriver.Ie(service=service)
     #     return driver
 
-    def dispose(self):
-        self.driver.close()
+    # def dispose(self):
+    #     self.driver.close()
 
 # Example of usage
 # factory = WebDriverFactory('Chrome')

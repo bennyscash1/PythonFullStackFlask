@@ -39,7 +39,7 @@ def index():
         sys.stderr = stderr
 
         try:
-            pytest.main(["-x", "WebTest\\Test\\LoginTest\\test_login.py", "-vv"])
+            pytest.main(["-x", "WebTest\\Test\\LoginTest\\test_web.py", "-vv"])
             # Run pytest with the specified arguments
         finally:
             # Reset stdout and stderr
@@ -54,7 +54,7 @@ def index():
         
         # Display the result on the webpage
 
-    return render_template('indexp.html', result=result)
+    return render_template('indexWebTest.html', result=result)
 
 if __name__ == '__main__':
     app.run(debug=True)
