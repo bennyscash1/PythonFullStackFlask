@@ -5,7 +5,11 @@
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "cSpell.words": [
+        "appium",
+        "Automator",
+        "bennys",
         "locatore",
+        "udid",
         "userinputs",
         "Weblocatore",
         "webtest"
@@ -13,6 +17,8 @@
     "python.analysis.extraPaths": [
         "./WebTest/Flows",
         "./WebTest/WebInfra",
-        "./WebTest/PageObject"
+        "./WebTest/PageObject",
+        "./Mobile/MobileBasePage",
+        "./MobileTest/MobileBasePage"
     ]
 }

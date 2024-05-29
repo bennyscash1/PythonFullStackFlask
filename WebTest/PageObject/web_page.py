@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
-from WebTest.PageObject.base_pages import BasePages
+from WebTest.PageObject.web_base_pages import WebBasePages
 
 
-class LoginPage(BasePages):
+class WebPage(WebBasePages):
 
     def __init__(self, driver):
         super().__init__(driver)    

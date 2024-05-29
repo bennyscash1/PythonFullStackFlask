@@ -1,7 +1,8 @@
-from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+
 import pytest
 
 class MobileBaseFunction:
@@ -11,52 +12,45 @@ class MobileBaseFunction:
         self.maxAttempt = 3
 
     def is_element_found(self, el):
-        wait = WebDriverWait(self.appiumDriver, self.timeOutInSeconds)
-        is_element_found = False
-        try:
-            wait.until(EC.element_to_be_clickable(el))
-            is_element_found = True
-        except TimeoutException:
-            is_element_found = False
-        return is_element_found
-
-    def wait_for_element(self, el):
         attempt = 0
-        element_click = False
+        element_locator_found = False
 
         while attempt < self.maxAttempt:
-            if self.is_element_found(el):
-                element_click = True
+            wait = WebDriverWait(self.appiumDriver, self.timeOutInSeconds)           
+            try:
+                self.appiumDriver.find_element(*el)  
+                wait.until(EC.presence_of_element_located(el))
+                element_locator_found = True
                 break
-            attempt += 1
+            except TimeoutException:
+                attempt += 1
+        return element_locator_found
+
+    def wait_for_element(self, el):
+        element_click = False
+
+        if self.is_element_found(el):
+            element_click = True
 
         element_details = f"Element {el} search failed within {self.timeOutInSeconds} seconds."
         assert element_click, element_details
 
     def mobile_click_element(self, el):
-        attempt = 0
-        element_click = False
-
-        while attempt < self.maxAttempt:
-            if self.is_element_found(el):
-                self.appiumDriver.find_element(*el).click()
-                element_click = True
-                break
-            attempt += 1
+        if self.is_element_found(el):
+            self.appiumDriver.find_element(*el).click()
+            element_click = True
+        else:
+            element_click = False
 
         element_details = f"Element {el} search failed within {self.timeOutInSeconds} seconds."
         assert element_click, element_details
 
-    def fill_text(self, el, text):
-        attempt = 0
-        element_click = False
-
-        while attempt < self.maxAttempt:
-            if self.is_element_found(el):
-                self.appiumDriver.find_element(*el).send_keys(text)
-                element_click = True
-                break
-            attempt += 1
+    def mobile_send_text(self, el, text):
+        if self.is_element_found(el):
+            self.appiumDriver.find_element(*el).send_keys(text)
+            element_click = True
+        else:
+            element_click = False
 
         element_details = f"Element {el} sendkeys failed within {self.timeOutInSeconds} seconds."
         assert element_click, element_details
@@ -70,9 +64,9 @@ class MobileBaseFunction:
     def open_status_bar(self):
         self.appiumDriver.open_notifications()
 
-    def close_status_bar(self):
-        screen_width = self.appiumDriver.get_window_size()['width']
-        screen_height = self.appiumDriver.get_window_size()['height']
+    # def close_status_bar(self):
+    #     screen_width = self.appiumDriver.get_window_size()['width']
+    #     screen_height = self.appiumDriver.get_window_size()['height']
 
-        touch_action = TouchAction(self.appiumDriver)
-        touch_action.press(x=screen_width / 2, y=screen_height - 10).release().perform()
+    #     touch_action = TouchAction(self.appiumDriver)
+    #     touch_action.press(x=screen_width / 2, y=screen_height - 10).release().perform()

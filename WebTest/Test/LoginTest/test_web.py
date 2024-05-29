@@ -6,16 +6,16 @@ print("hellow world")
 directory = path.Path(__file__).abspath()
 print(directory)
 # setting path
-sys.path.append(str(directory.parent.parent.parent.parent))
+sys.path.append(str(directory.parent.parent.parent.parent.parent))
 from importlib.resources import path
 import pytest
-from WebTest.PageObject.login_page import LoginPage
+from WebTest.PageObject.web_page import WebPage
 from WebTest.WebInfra.web_driver_factory import WebDriverFactory
 
 class TestWeb(WebDriverFactory):
     def setup_method(self):
-       # super().__init__()
-        self.login_page = LoginPage(self.driver)
+        super().__init__()
+        self.login_page = WebPage(self.driver)
 
     @pytest.mark.webtest    
     def test_web_run(self):
