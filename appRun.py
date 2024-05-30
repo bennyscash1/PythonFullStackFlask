@@ -39,7 +39,7 @@ def handle_request(template_name):
         if template_name == 'indexMobileTest.html':
             test_dir = os.path.join(os.path.dirname(__file__), 'MobileTest', 'MobileTest')
         else:
-            test_dir = os.path.join(os.path.dirname(__file__), 'WebTest', 'Test', 'LoginTest')
+            test_dir = os.path.join(os.path.dirname(__file__), 'WebTest', 'Test')
         
         os.makedirs(test_dir, exist_ok=True)
 
@@ -68,7 +68,7 @@ def handle_request(template_name):
             if template_name == 'indexMobileTest.html':
                 pytest.main(["-x", "MobileTest\\MobileTest\\test_mobile.py", "-vv"])
             else:
-                pytest.main(["-x", "WebTest\\Test\\LoginTest\\test_web.py", "-vv"])
+                pytest.main(["-x", "WebTest\\Test\\test_web.py", "-vv"])
         finally:
             # Reset stdout and stderr
             sys.stdout = sys.__stdout__

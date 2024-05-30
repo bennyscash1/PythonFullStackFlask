@@ -6,11 +6,10 @@ class WebPage(WebBasePages):
 
     def __init__(self, driver):
         super().__init__(driver)    
-       # self.driver = driver 
+        self.driver = driver 
     
-    def open_page(self, navigate_to_logon_screen=True, url=None):
-        if navigate_to_logon_screen and url is not None:
-            self.driver.get(url)
+    def open_page(self, url):
+        self.navigate_to_url(url)
         return self
     ##Input data
     def enter_string(self, xpath, textInput):

@@ -49,6 +49,8 @@ class WeblocatoreFunction():
             return
         element_details = f"Element {by_locator} send text failed within {self.time_out_in_seconds} seconds"
         self.assertTrue(element_visible, element_details)
+    def navigate_to_url(self, url):        
+        self.driver.get(url)
 
     def switch_to_frame(self):
         self.driver.switch_to.frame(0)
