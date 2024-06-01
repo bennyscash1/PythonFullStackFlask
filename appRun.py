@@ -19,16 +19,26 @@ def mobile_index():
 def web_index():
     return handle_request('indexWebTest.html')
 
+@app.route('/apiTest', methods=['GET', 'POST'])
+def api_index():
+    return handle_request('indexApiTest.html')
+
 def handle_request(template_name):
     result = ""
     if request.method == 'POST':
         if template_name == 'indexMobileTest.html':
-            # Collect mobile-specific user inputs from the form
             app_package = request.form['appPackage']
             app_activity = request.form['appActivity']
             udid = request.form['udid']
+            
+        elif template_name == 'indexApiTest.html':
+            api_endpoint = request.form['apiEndpoint']
+            request_type = request.form['requestType']
+            headers = request.form.get('headers', "")
+            assert_status = request.form['assertStatus']
+            post_keys = request.form.getlist('postKey[]')
+            post_values = request.form.getlist('postValue[]')
         else:
-            # Collect web-specific user inputs from the form
             base_url = request.form['BaseUrl']
 
         xpath_fields = request.form.getlist('xpathField[]')
@@ -38,6 +48,8 @@ def handle_request(template_name):
 
         if template_name == 'indexMobileTest.html':
             test_dir = os.path.join(os.path.dirname(__file__), 'MobileTest', 'MobileTest')
+        elif template_name == 'indexApiTest.html':
+            test_dir = os.path.join(os.path.dirname(__file__), 'ApiTest',)
         else:
             test_dir = os.path.join(os.path.dirname(__file__), 'WebTest', 'Test')
         
@@ -48,6 +60,15 @@ def handle_request(template_name):
                 f.write(f"AppPackage: {app_package}\n")
                 f.write(f"AppActivity: {app_activity}\n")
                 f.write(f"UDID: {udid}\n")
+            elif template_name == 'indexApiTest.html':
+                f.write(f"APIEndpoint: {api_endpoint}\n")
+                f.write(f"RequestType: {request_type}\n")
+                f.write(f"Headers: {headers}\n")
+                f.write(f"AssertStatus: {assert_status}\n")
+                for key in post_keys:
+                    f.write(f"PostKey: {key}\n")
+                for value in post_values:
+                    f.write(f"PostValue: {value}\n")
             else:
                 f.write(f"BaseUrl: {base_url}\n")
 
@@ -58,7 +79,6 @@ def handle_request(template_name):
             for xpath_assert in xpath_assert:
                 f.write(f"AssertXpath: {xpath_assert}\n")
 
-        # Run pytest with the test file
         stdout = io.StringIO()
         stderr = io.StringIO()
         sys.stdout = stdout
@@ -66,15 +86,15 @@ def handle_request(template_name):
 
         try:
             if template_name == 'indexMobileTest.html':
-                pytest.main(["-x", "MobileTest\\MobileTest\\test_mobile.py", "-vv"])
+                pytest.main(["-x", "MobileTest/MobileTest/test_mobile.py", "-vv"])
+            elif template_name == 'indexApiTest.html':
+                pytest.main(["-x", "ApiTest/test_get.py", "-vv"])
             else:
-                pytest.main(["-x", "WebTest\\Test\\test_web.py", "-vv"])
+                pytest.main(["-x", "WebTest/Test/test_web.py", "-vv"])
         finally:
-            # Reset stdout and stderr
             sys.stdout = sys.__stdout__
             sys.stderr = sys.__stderr__
 
-        # Get the output from the StringIO objects
         stdout_output = stdout.getvalue()
         stderr_output = stderr.getvalue()
 

@@ -7,21 +7,30 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
         .tabs {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
+            align-items: center;
             list-style-type: none;
-            padding: 0;
+            padding: 10px 0;
             margin: 0;
             background-color: #f1f1f1;
+            border-bottom: 1px solid #ccc;
         }
         .tab {
-            padding: 10px;
+            padding: 10px 20px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         .tab:hover {
             background-color: #ddd;
+        }
+        .tab a {
+            text-decoration: none;
+            color: #333;
         }
     </style>
 </head>
@@ -29,6 +38,7 @@
     <ul class="tabs">
         <li class="tab"><a href="/mobileTest">Mobile Test</a></li>
         <li class="tab"><a href="/webTest">Web Test</a></li>
+        <li class="tab"><a href="/apiTest">API Test</a></li>
     </ul>
 </body>
 </html>

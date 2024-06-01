@@ -2,4 +2,3 @@ AppPackage: com.safecashapps.staging
 AppActivity: com.safecashapps.MainActivity
 UDID: 43bd5a1b
 InputXpath: //android.widget.EditText[@resource-id='phoneInput'], 0584102220
-ButtonAction: //android.view.ViewGroup[@content-desc='המשך']
