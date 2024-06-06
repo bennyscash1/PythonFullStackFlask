@@ -2,10 +2,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Flask (app.py)",
+            "name": "Python: Flask (appRun.py)",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/app.py",
+            "program": "${workspaceFolder}/appRun.py",
             "console": "integratedTerminal",
             "env": {
                 "FLASK_ENV": "development"
