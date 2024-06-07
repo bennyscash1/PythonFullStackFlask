@@ -114,80 +114,54 @@
             </tr>
         </thead>
         <tbody id="test-table-body">
-            <!-- Dynamic rows will be appended here -->
+            {% for test in tests %}
+            <tr>
+                <td>Web Test</td>
+                <td>{{ test.testName }}</td>
+                <td><button class="edit-btn" onclick="editTest('{{ test.testName }}')">Edit</button></td>
+                <td><button class="run-btn" onclick="runTest('{{ test.testName }}')">Run</button></td>
+                <td><button class="delete-btn" onclick="deleteTest('{{ test.testName }}')">Delete</button></td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
     <script>
-        // Sample data fetching function
-        function fetchTests() {
-            return [
-                {type: 'API Test', name: 'Test API Flow 1'},
-                {type: 'Web Test', name: 'Test Web Flow 1'},
-                {type: 'Mobile Test', name: 'Test Mobile Flow 1'},
-            ];
+        function editTest(testName) {
+            window.location.href = `webTemplates/editTest.html?testName=${encodeURIComponent(testName)}`;
         }
 
-        // Function to populate table
-        function populateTable() {
-            const testTableBody = document.getElementById('test-table-body');
-            const tests = fetchTests(); // Replace with actual data fetching logic
+        function runTest(testName) {
+            fetch(`/runTest`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ testName: testName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Failed to run test: ' + data.error);
+                } else {
+                    alert('Test run successfully!');
+                }
+            })
+            .catch(error => console.error('Error running test:', error));
+        }
 
-            tests.forEach(test => {
-                const row = document.createElement('tr');
-
-                const typeCell = document.createElement('td');
-                typeCell.textContent = test.type;
-                row.appendChild(typeCell);
-
-                const nameCell = document.createElement('td');
-                nameCell.textContent = test.name;
-                row.appendChild(nameCell);
-
-                const editCell = document.createElement('td');
-                const editButton = document.createElement('button');
-                editButton.className = 'edit-btn';
-                editButton.textContent = 'Edit';
-                editButton.onclick = () => editTest(test);
-                editCell.appendChild(editButton);
-                row.appendChild(editCell);
-
-                const runCell = document.createElement('td');
-                const runButton = document.createElement('button');
-                runButton.className = 'run-btn';
-                runButton.textContent = 'Run';
-                runButton.onclick = () => runTest(test);
-                runCell.appendChild(runButton);
-                row.appendChild(runCell);
-
-                const deleteCell = document.createElement('td');
-                const deleteButton = document.createElement('button');
-                deleteButton.className = 'delete-btn';
-                deleteButton.textContent = 'Delete';
-                deleteButton.onclick = () => deleteTest(test);
-                deleteCell.appendChild(deleteButton);
-                row.appendChild(deleteCell);
-
-                testTableBody.appendChild(row);
+        function deleteTest(testName) {
+            fetch(`/delete/${testName}`, {
+                method: 'DELETE',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Failed to delete test: ' + data.error);
+                }
             });
         }
-
-        function editTest(test) {
-            // Add logic to edit test
-            alert('Edit ' + test.name);
-        }
-
-        function runTest(test) {
-            // Add logic to run test
-            alert('Run ' + test.name);
-        }
-
-        function deleteTest(test) {
-            // Add logic to delete test
-            alert('Delete ' + test.name);
-        }
-
-        // Populate table on page load
-        window.onload = populateTable;
     </script>
 </body>
 </html>

@@ -8,13 +8,7 @@ firebase_admin.initialize_app(cred)
 db_connect= firestore.client()
 
 data={
-    'Base url': 'input url data',
-    'input field': {
-        'xpath locator': 'input locator xpath data',
-        'input string': 'input string data'
-    },
-    'Button locator': 'button locator xpath data',
-    'Assert locator': 'assert locator xpath data'
+
 }
 
 doc_refrence= db_connect.collection('WebCollection').document()

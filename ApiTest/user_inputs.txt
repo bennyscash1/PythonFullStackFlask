@@ -1,4 +1,8 @@
-APIEndpoint: https://reqres.in/api/users/2
-RequestType: GET
+APIEndpoint: https://reqres.in/api/register
+RequestType: POST
 Headers: 
-AssertStatus: 203
+AssertStatus: 200
+PostKey: email
+PostKey: password
+PostValue: eve.holt@reqres.in
+PostValue: pistol
