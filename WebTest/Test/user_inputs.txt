@@ -1,3 +1,2 @@
 BaseUrl: https://practicetestautomation.com/practice-test-login/
-InputXpath: //input[@id='username'], student
-ButtonAction: //button[@id='submit']
+InputXpath: //input[@id='username'], BAti
