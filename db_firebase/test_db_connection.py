@@ -1,7 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-cred = credentials.Certificate(r"db_firebase\pythonfullstackflask-firebase-adminsdk-qmrb6-4b41a4d418.json")
+cred = credentials.Certificate(r"db_firebase\db_secret.json")
 firebase_admin.initialize_app(cred)
 
 
