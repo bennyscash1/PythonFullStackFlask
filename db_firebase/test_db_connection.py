@@ -14,3 +14,4 @@ data={
 doc_refrence= db_connect.collection('WebCollection').document()
 doc_refrence.set(data)
 print('Document id:', doc_refrence.id)
+print("blabla")
