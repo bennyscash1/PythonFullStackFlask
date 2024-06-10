@@ -5,7 +5,6 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.ie.service import Service as IEService
 
-
 class WebDriverFactory:
     def __init__(self, browser_type='Chrome'):
         self.time_out_in_seconds = 20
@@ -59,8 +58,8 @@ class WebDriverFactory:
     #     driver = webdriver.Ie(service=service)
     #     return driver
 
-    def dispose(self):
-        self.driver.close()
+    # def dispose(self):
+    #     self.driver.close()
 
 # Example of usage
 # factory = WebDriverFactory('Chrome')

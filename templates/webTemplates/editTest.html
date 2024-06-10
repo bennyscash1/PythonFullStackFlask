@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Web Test</title>
+    <style>
+        /* Add your styles here */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            z-index: 1000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+    <script>
+        function addFieldPair() {
+            const container = document.getElementById('dynamic-fields');
+            const pairDiv = document.createElement('div');
+            pairDiv.className = 'field-pair';
+
+            const xpathLabel = document.createElement('label');
+            xpathLabel.textContent = 'Input field locator:';
+            pairDiv.appendChild(xpathLabel);
+
+            const xpathInput = document.createElement('input');
+            xpathInput.type = 'text';
+            xpathInput.name = 'xpathField[]';
+            pairDiv.appendChild(xpathInput);
+
+            const inputLabel = document.createElement('label');
+            inputLabel.textContent = 'Input:';
+            pairDiv.appendChild(inputLabel);
+
+            const stringInput = document.createElement('input');
+            stringInput.type = 'text';
+            stringInput.name = 'inputString[]';
+            pairDiv.appendChild(stringInput);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                container.removeChild(pairDiv);
+            };
+            pairDiv.appendChild(deleteButton);
+
+            container.appendChild(pairDiv);
+        }
+
+        function addXpathField() {
+            const container = document.getElementById('dynamic-fields');
+            const xpathDiv = document.createElement('div');
+            xpathDiv.className = 'field-single';
+
+            const xpathLabel = document.createElement('label');
+            xpathLabel.textContent = 'Button locator:';
+            xpathDiv.appendChild(xpathLabel);
+
+            const xpathInput = document.createElement('input');
+            xpathInput.type = 'text';
+            xpathInput.name = 'xpathClick[]';
+            xpathDiv.appendChild(xpathInput);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                container.removeChild(xpathDiv);
+            };
+            xpathDiv.appendChild(deleteButton);
+
+            container.appendChild(xpathDiv);
+        }
+
+        function addAssertField() {
+            const container = document.getElementById('dynamic-fields');
+            const xpathDiv = document.createElement('div');
+            xpathDiv.className = 'field-single';
+
+            const xpathLabel = document.createElement('label');
+            xpathLabel.textContent = 'Assertion locator:';
+            xpathDiv.appendChild(xpathLabel);
+
+            const xpathInput = document.createElement('input');
+            xpathInput.type = 'text';
+            xpathInput.name = 'xpathAssert[]';
+            xpathDiv.appendChild(xpathInput);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                container.removeChild(xpathDiv);
+            };
+            xpathDiv.appendChild(deleteButton);
+
+            container.appendChild(xpathDiv);
+        }
+
+        function saveTest() {
+            const testName = document.getElementById('testName').value;
+            const testData = {
+                BaseUrl: document.getElementById('baseUrl').value,
+                inputStrings: Array.from(document.querySelectorAll('input[name="inputString[]"]')).map(input => input.value),
+                testName: testName,
+                xpathAsserts: Array.from(document.querySelectorAll('input[name="xpathAssert[]"]')).map(input => input.value),
+                xpathClicks: Array.from(document.querySelectorAll('input[name="xpathClick[]"]')).map(input => input.value),
+                xpathFields: Array.from(document.querySelectorAll('input[name="xpathField[]"]')).map(input => input.value)
+            };
+
+            fetch('/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(testData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert("Error saving data: " + data.error);
+                } else {
+                    alert("Data saved successfully!");
+                }
+            })
+            .catch(error => console.error('Error saving test data:', error));
+        }
+
+        window.onload = function() {
+            const testName = new URLSearchParams(window.location.search).get('testName');
+
+            if (!testName) {
+                alert("No test name provided");
+                return;
+            }
+
+            fetch(`/getTestData?testName=${testName}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        document.getElementById('baseUrl').value = data.BaseUrl || '';
+                        data.inputStrings.forEach((inputString, index) => {
+                            addFieldPair();
+                            document.querySelectorAll('input[name="inputString[]"]')[index].value = inputString;
+                            document.querySelectorAll('input[name="xpathField[]"]')[index].value = data.xpathFields[index];
+                        });
+                        data.xpathClicks.forEach((xpathClick, index) => {
+                            addXpathField();
+                            document.querySelectorAll('input[name="xpathClick[]"]')[index].value = xpathClick;
+                        });
+                        data.xpathAsserts.forEach((xpathAssert, index) => {
+                            addAssertField();
+                            document.querySelectorAll('input[name="xpathAssert[]"]')[index].value = xpathAssert;
+                        });
+                        document.getElementById('testName').value = data.testName || '';
+                    }
+                })
+                .catch(error => console.error('Error fetching test data:', error));
+        };
+    </script>
+</head>
+<body>
+    <h1>Edit Test</h1>
+    <form onsubmit="saveTest(); return false;">
+        <label for="testName">Test Name:</label>
+        <input type="text" id="testName" name="testName"><br><br>
+
+        <label for="baseUrl">Base URL:</label>
+        <input type="text" id="baseUrl" name="BaseUrl"><br><br>
+
+        <div id="dynamic-fields">
+            <!-- Dynamic fields will be added here -->
+        </div>
+
+        <button type="button" onclick="addFieldPair()">Add Input Field</button>
+        <button type="button" onclick="addXpathField()">Add Button Locator</button>
+        <button type="button" onclick="addAssertField()">Add Assertion Locator</button><br><br>
+
+        <button type="submit">Save test flow</button>
+    </form>
+    <div id="test-result">
+        {{ result|safe }}
+    </div>
+</body>
+</html>

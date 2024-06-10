@@ -1,20 +1,15 @@
 from selenium.webdriver.common.by import By
-from WebTest.PageObject.base_pages import BasePages
+from WebTest.PageObject.web_base_pages import WebBasePages
 
 
-class LoginPage(BasePages):
+class WebPage(WebBasePages):
 
     def __init__(self, driver):
         super().__init__(driver)    
-       # self.driver = driver 
-        self.m_user_name_input_field = (By.XPATH, "//input[@id='username']")
-        self.m_password_input_field = (By.XPATH, "//input[@id='password']")
-        self.m_submit_button = (By.XPATH, "//button[@id='submit']")
-        self.m_home_page_logo_by = (By.XPATH, "//h1[normalize-space()='Logged In Successfully']")
+        self.driver = driver 
     
-    def open_page(self, navigate_to_logon_screen=True, url=None):
-        if navigate_to_logon_screen and url is not None:
-            self.driver.get(url)
+    def open_page(self, url):
+        self.navigate_to_url(url)
         return self
     ##Input data
     def enter_string(self, xpath, textInput):
