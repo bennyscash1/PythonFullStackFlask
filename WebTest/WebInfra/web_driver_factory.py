@@ -5,7 +5,6 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.ie.service import Service as IEService
 
-
 class WebDriverFactory:
     def __init__(self, browser_type='Chrome'):
         self.time_out_in_seconds = 20

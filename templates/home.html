@@ -6,31 +6,94 @@
     <title>Test Navigation</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .tabs {
             display: flex;
             justify-content: center;
-            align-items: center;
             list-style-type: none;
-            padding: 10px 0;
-            margin: 0;
-            background-color: #f1f1f1;
-            border-bottom: 1px solid #ccc;
+            padding: 15px 0;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
         .tab {
-            padding: 10px 20px;
+            margin: 0 15px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
         .tab:hover {
-            background-color: #ddd;
+            transform: scale(1.1);
         }
         .tab a {
             text-decoration: none;
             color: #333;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .tab a:hover {
+            background-color: #ddd;
+        }
+        table {
+            width: 90%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: #fff;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .edit-btn {
+            background-color: #ffc107;
+        }
+        .edit-btn:hover {
+            background-color: #e0a800;
+            transform: scale(1.1);
+        }
+        .run-btn {
+            background-color: #28a745;
+        }
+        .run-btn:hover {
+            background-color: #218838;
+            transform: scale(1.1);
+        }
+        .delete-btn {
+            background-color: #dc3545;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -40,5 +103,65 @@
         <li class="tab"><a href="/webTest">Web Test</a></li>
         <li class="tab"><a href="/apiTest">API Test</a></li>
     </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Edit</th>
+                <th>Run</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="test-table-body">
+            {% for test in tests %}
+            <tr>
+                <td>Web Test</td>
+                <td>{{ test.testName }}</td>
+                <td><button class="edit-btn" onclick="editTest('{{ test.testName }}')">Edit</button></td>
+                <td><button class="run-btn" onclick="runTest('{{ test.testName }}')">Run</button></td>
+                <td><button class="delete-btn" onclick="deleteTest('{{ test.testName }}')">Delete</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        function editTest(testName) {
+            window.location.href = `webTemplates/editTest.html?testName=${encodeURIComponent(testName)}`;
+        }
+
+        function runTest(testName) {
+            fetch(`/runTest`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ testName: testName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Failed to run test: ' + data.error);
+                } else {
+                    alert('Test run successfully!');
+                }
+            })
+            .catch(error => console.error('Error running test:', error));
+        }
+
+        function deleteTest(testName) {
+            fetch(`/delete/${testName}`, {
+                method: 'DELETE',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Failed to delete test: ' + data.error);
+                }
+            });
+        }
+    </script>
 </body>
 </html>

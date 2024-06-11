@@ -10,6 +10,7 @@
         "bennys",
         "Chromedriver",
         "dotenv",
+        "firestore",
         "locatore",
         "pycache",
         "pytest",
