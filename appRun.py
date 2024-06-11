@@ -4,9 +4,13 @@ from flask import Flask, render_template, request
 import subprocess
 import os
 import pytest
+from dotenv import load_dotenv
+
+load_dotenv() 
 
 app = Flask(__name__)
 
+print(app.config['DEBUG'])
 @app.route('/')
 def home():
     return render_template('home.html')

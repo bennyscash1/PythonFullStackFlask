@@ -6,3 +6,5 @@ __pycache__/GetData.cpython-312.pyc
 /WebTest/PageObject/__pycache__
 *.pyc
 *.pyc
+/env
+.env
