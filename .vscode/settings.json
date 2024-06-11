@@ -11,6 +11,7 @@
         "Chromedriver",
         "dotenv",
         "firestore",
+        "jsonify",
         "locatore",
         "pycache",
         "pytest",

@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-# Inititalize .env file
+# Initialize .env file
 load_dotenv() 
 
 # Initialize Flask app
