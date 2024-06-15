@@ -1,0 +1,28 @@
+[flake8]
+ignore =
+    # Common exclusions for Flask (adjust as needed):
+    E203,  # Whitespace before ':' (Black handles this)
+    W503,  # Line break before binary operator (Black handles this)
+    E501,  # Line too long (Black handles this, but set a limit below)
+    E128  # Continuation line under-indented for visual indent
+exclude =
+    # Folders/files to exclude from checks:
+    .git,
+    __pycache__,
+    env,  # Your virtual environment folder
+    migrations  # Flask-Migrate's migration files
+
+max-line-length = 88  # PEP8 recommendation, but adjust for your team
+max-complexity = 10   # Cyclomatic complexity limit (adjust based on project)
+
+# Plugin for checking docstrings:
+# install with: pip install flake8-docstrings
+docstring-convention = google
+
+# Plugin for checking unused imports:
+# install with: pip install flake8-tidy-imports
+application-import-names = flask
+
+# Plugin for enforcing type hints (optional):
+# install with: pip install flake8-annotations
+select = ANN

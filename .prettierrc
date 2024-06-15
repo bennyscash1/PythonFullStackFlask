@@ -1,0 +1,11 @@
+{
+  "printWidth": 80,       // Maximum line length (adjust as needed)
+  "tabWidth": 4,         // Number of spaces per indentation level
+  "useTabs": true,       // Use spaces instead of tabs
+  "semi": true,          // Include semicolons at the end of statements
+  "singleQuote": true,    // Use single quotes instead of double quotes
+  "trailingComma": "es5", // Add trailing commas in arrays and objects
+  "bracketSpacing": true, // Add spaces around brackets in objects
+  "arrowParens": "always",// Include parentheses around arrow function arguments
+  "htmlWhitespaceSensitivity": "css" // Respect whitespace rules in HTML
+}
