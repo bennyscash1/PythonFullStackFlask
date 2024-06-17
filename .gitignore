@@ -2,3 +2,7 @@
 .env
 *.pyc
 /env
+/__pycache__
+*.pyc
+db_firebase/db_secret.json
+__pycache__/GetData.cpython-312.pyc
