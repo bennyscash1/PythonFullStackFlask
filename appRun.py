@@ -7,12 +7,15 @@ import pytest
 from dotenv import load_dotenv
 import firebase_admin
 from firebase_admin import credentials, firestore
+from flask_cors import CORS
+
 
 # Initialize .env file
 load_dotenv() 
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:3000"])
 
 # Initialize Firebase Admin SDK
 cred = credentials.Certificate(r"db_firebase/db_secret.json")
@@ -24,6 +27,12 @@ def home():
     tests_ref = db.collection('WebCollection')
     tests = [doc.to_dict() for doc in tests_ref.stream()]
     return render_template('home.html', tests=tests)
+
+@app.route('/tests', methods=['GET'])
+def get_tests():
+    tests_ref = db.collection('WebCollection')
+    tests = [doc.to_dict() for doc in tests_ref.stream()]
+    return tests
 
 @app.route('/mobileTest', methods=['GET', 'POST'])
 def mobile_index():
@@ -129,6 +138,7 @@ def get_test_data():
 
 @app.route('/apiTest', methods=['GET', 'POST'])
 def api_index():
+    print("API Test")
     return handle_request('indexApiTest.html')
 
 def handle_request(template_name):
