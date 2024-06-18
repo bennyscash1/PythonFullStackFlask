@@ -1,8 +1,7 @@
 import Link from "next/link";
 import styles from "./navBar.module.css";
-import { usePathname } from 'next/navigation'
-
-import { STRINGS } from "@/app/constants";
+import { usePathname } from 'next/navigation';
+import { STRINGS } from "@/app/constants/app";
 import { useCallback } from "react";
 
 const Navbar = () => {
