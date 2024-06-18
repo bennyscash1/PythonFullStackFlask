@@ -44,3 +44,5 @@ yarn-error.log*
 next-env.d.ts
 /templates/automat-frontend/.next
 /templates/automat-frontend/node_modules
+/app/.next
+/app/node_modules
