@@ -4,9 +4,14 @@ from flask import Flask, render_template, request, jsonify
 import subprocess
 import os
 import pytest
+from dotenv import load_dotenv
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask_cors import CORS
+
+
+# Initialize .env file
+load_dotenv() 
 
 # Initialize Flask app
 app = Flask(__name__)
