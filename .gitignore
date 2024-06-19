@@ -1,5 +1,3 @@
-
-.env
 *.pyc
 /env
 /__pycache__
@@ -35,8 +33,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
-.env
-app\.env
+app/.env*.local
 
 # vercel
 .vercel
