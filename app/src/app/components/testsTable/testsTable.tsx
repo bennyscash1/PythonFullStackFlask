@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import React from 'react';
 import styles from './testsTable.module.css';
+import { runTest, deleteTest } from '@/app/serverActions/testsTable';
 
 export interface Test {
   testName: string;
@@ -10,11 +13,9 @@ interface TestTableProps {
   tableHeight: string;
   tableWidth: string;
   tests: Test[];
-  runTest: (testName: string) => void;
-  deleteTest: (testName: string) => void;
 }
 
-const TestTable = ({ tableHeight, tableWidth, tests = [], runTest, deleteTest }: TestTableProps) => {
+const TestTable = ({ tableHeight, tableWidth, tests }: TestTableProps) => {
   return (
     <table className={styles.table} style={{height: tableHeight, width: tableWidth }}>
       <thead>
@@ -37,8 +38,12 @@ const TestTable = ({ tableHeight, tableWidth, tests = [], runTest, deleteTest }:
                   <button type='button' className={styles.editBtn}>Edit</button>
                 </Link>
             </td>
-            <td><button type='button' className={styles.runBtn} onClick={() => runTest(test.testName)}>Run</button></td>
-            <td><button type='button' className={styles.deleteBtn} onClick={() => deleteTest(test.testName)}>Delete</button></td>
+            <td>
+              <button type='button' className={styles.runBtn} onClick={() => runTest(test.testName)}>Run</button>
+            </td>
+            <td>
+              <button type='button' className={styles.deleteBtn} onClick={() => deleteTest(test.testName) }>Delete</button>
+            </td>
           </tr>
         ))}
       </tbody>

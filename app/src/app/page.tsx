@@ -1,24 +1,23 @@
-"use client"
+'use server';
 
-import styles from './page.module.css';
-import { HOME_TESTS_TABLE, STRINGS } from '@/app/constants/app';
-import TestsTable from '@/app/components/testsTable/testsTable';
-import { useTests } from './hooks/useTests';
+import { useEffect, useState } from "react"
+import { auth, signOut } from '../../auth'
+import { Session } from "next-auth";
+import { SignOutButton } from "./components/auth/signOutButton/signOutButton";
+import { SignInButton } from "./components/auth/signInButton/signInButton";
 
-const HomePage = () => {
-  const {tests, runTest, deleteTest} = useTests();
+const Home = async () => {
+    const authSession = await auth();
 
-  const {HEIGHT: tableHeight, WIDTH: tableWidth} = HOME_TESTS_TABLE;
-  
-  return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to {STRINGS.TITLE}</h1>
-        <p className={styles.description}>{STRINGS.DESCRIPTION}</p>
-      </main>
-      <TestsTable tests={tests} runTest={runTest} deleteTest={deleteTest} tableHeight={tableHeight} tableWidth={tableWidth}/>
-    </div>
-  );
-};
 
-export default HomePage;
+    return (
+        <div>
+            <h1>Home</h1>
+            <p>Session: {authSession?.user?.email}</p>
+            <SignOutButton />
+            <SignInButton />
+        </div>
+    )
+}
+
+export default Home

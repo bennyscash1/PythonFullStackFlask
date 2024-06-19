@@ -1,1 +1,1 @@
-BaseUrl: https://practicetestautomation.com/practice-test-login/
+BaseUrl: test3

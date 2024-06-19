@@ -1,45 +1,58 @@
 {
-    "python.testing.pytestArgs": [
-        "."
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "cSpell.words": [
-        "appium",
-        "Automatico",
-        "Automator",
-        "bennys",
-        "Chromedriver",
-        "docstrings",
-        "dotenv",
-        "esnext",
-        "firestore",
-        "isort",
-        "jsonify",
-        "locatore",
-        "Parens",
-        "pycache",
-        "pytest",
-        "PYTHONFULLSTACKFLASK",
-        "udid",
-        "userinputs",
-        "venv",
-        "Weblocatore",
-        "webtest"
-    ],
-    "python.analysis.extraPaths": [
-        "./WebTest/Flows",
-        "./WebTest/WebInfra",
-        "./WebTest/PageObject",
-        "./Mobile/MobileBasePage",
-        "./MobileTest/MobileBasePage"
-    ],
-    "cSpell.caseSensitive": true,
-    "github.copilot.chat.scopeSelection": true,
-    "css.format.spaceAroundSelectorSeparator": true,
-    "eslint.lintTask.enable": true,
-    "eslint.format.enable": true,
-    "eslint.workingDirectories": [
-        "/", "/templates/automat-frontend"
-    ],
+	"python.testing.pytestArgs": ["."],
+	"python.testing.unittestEnabled": false,
+	"python.testing.pytestEnabled": true,
+	"cSpell.words": [
+		"appium",
+		"Automatico",
+		"Automator",
+		"bennys",
+		"Chromedriver",
+		"docstrings",
+		"dotenv",
+		"esnext",
+		"firestore",
+		"hintrc",
+		"isort",
+		"jsonify",
+		"locatore",
+		"nextauth",
+		"Parens",
+		"pycache",
+		"pytest",
+		"PYTHONFULLSTACKFLASK",
+		"setenv",
+		"udid",
+		"userinputs",
+		"venv",
+		"Weblocatore",
+		"webtest"
+	],
+	"python.analysis.extraPaths": [
+		"./WebTest/Flows",
+		"./WebTest/WebInfra",
+		"./WebTest/PageObject",
+		"./Mobile/MobileBasePage",
+		"./MobileTest/MobileBasePage"
+	],
+	"cSpell.caseSensitive": true,
+	"github.copilot.chat.scopeSelection": true,
+	"css.format.spaceAroundSelectorSeparator": true,
+	"eslint.lintTask.enable": true,
+	"eslint.format.enable": true,
+	"eslint.workingDirectories": ["./app"],
+	"eslint.lintTask.options": "",
+	"eslint.onIgnoredFiles": "warn",
+	"editor.defaultFoldingRangeProvider": "vscode.typescript-language-features",
+	"[javascript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"editor.defaultFormatter": "vscode.typescript-language-features",
+	"markdown.preview.typographer": true,
+	"prettier.jsxSingleQuote": true,
+	"prettier.useTabs": true,
+	"prettier.singleQuote": true,
+	"[markdown]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
 }

@@ -1,6 +1,5 @@
-"use client"
-
 import { Roboto_Slab } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import Navbar from "./components/navbar/navBar";
 
@@ -15,10 +14,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        <div style={{ flex: '1 0 auto' }}>
-          {children}
-        </div>
+        <SessionProvider>
+          <Navbar />
+          <div style={{ flex: '1 0 auto' }}>
+            {children}
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );

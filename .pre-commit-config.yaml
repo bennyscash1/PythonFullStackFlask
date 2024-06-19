@@ -1,30 +1,23 @@
 repos:
   # Flake8 Hook:
   - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0  # Update to the latest stable version
+    rev: 6.0.0 # Update to the latest stable version
     hooks:
       - id: flake8
-        additional_dependencies: [flake8-docstrings, flake8-tidy-imports]  # Add your desired plugins
-        args: [--config=.flake8,  --exit-zero]  # Point to your custom Flake8 configuration
+        additional_dependencies: [flake8-docstrings, flake8-tidy-imports] # Add your desired plugins
+        args: [--config=.flake8, --exit-zero] # Point to your custom Flake8 configuration
 
   # isort Hook:
   - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0  # Update to the latest stable version
+    rev: 5.12.0 # Update to the latest stable version
     hooks:
       - id: isort
 
   # Black Hook:
   - repo: https://github.com/psf/black
-    rev: 24.4.2  # Use the latest stable version you find
+    rev: 24.4.2 # Use the latest stable version you find
     hooks:
       - id: black
-
-  # Prettier Hook (for HTML/Jinja Templates):
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v4.0.0-alpha.8  # Update to the latest stable version
-    hooks:
-      - id: prettier
-        types_or: [html]  # Adjust based on your template file extensions
 
   # Requirements Check (using `check-dependencies-updated` hook):
   - repo: local
@@ -37,7 +30,7 @@ repos:
 
   # Other Best Practice Hooks (Optional):
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0  # Update to the latest stable version
+    rev: v4.6.0 # Update to the latest stable version
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -45,4 +38,4 @@ repos:
       - id: check-added-large-files
       - id: mixed-line-ending
       - id: no-commit-to-branch
-        args: [--branch, main]  # Prevent accidental commits to the main branch
+        args: [--branch, main] # Prevent accidental commits to the main branch
