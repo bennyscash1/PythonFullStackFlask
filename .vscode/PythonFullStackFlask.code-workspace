@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../Automatico"
+		}
+	],
+	"settings": {
+		"github.copilot.chat.scopeSelection": true
+	}
+}
