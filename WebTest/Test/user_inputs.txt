@@ -1,2 +1,0 @@
-BaseUrl: https://practicetestautomation.com/practice-test-login/
-InputXpath: //input[@id='username'], student
