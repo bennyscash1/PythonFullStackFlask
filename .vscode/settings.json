@@ -1,26 +1,25 @@
 {
-    "python.testing.pytestArgs": [
-        "."
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "cSpell.words": [
-        "appium",
-        "Automator",
-        "bennys",
-        "Chromedriver",
-        "firestore",
-        "locatore",
-        "udid",
-        "userinputs",
-        "Weblocatore",
-        "webtest"
-    ],
-    "python.analysis.extraPaths": [
-        "./WebTest/Flows",
-        "./WebTest/WebInfra",
-        "./WebTest/PageObject",
-        "./Mobile/MobileBasePage",
-        "./MobileTest/MobileBasePage"
-    ]
+  "python.testing.pytestArgs": ["."],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "cSpell.words": [
+    "appium",
+    "Automator",
+    "bennys",
+    "Chromedriver",
+    "dotenv",
+    "firestore",
+    "locatore",
+    "udid",
+    "userinputs",
+    "Weblocatore",
+    "webtest"
+  ],
+  "python.analysis.extraPaths": [
+    "./WebTest/Flows",
+    "./WebTest/WebInfra",
+    "./WebTest/PageObject",
+    "./Mobile/MobileBasePage",
+    "./MobileTest/MobileBasePage"
+  ]
 }
