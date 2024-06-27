@@ -1,4 +1,0 @@
-APIEndpoint: https://reqres.in/api/users
-RequestType: GET
-Headers: 
-AssertStatus: 200

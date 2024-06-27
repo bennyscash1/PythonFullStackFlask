@@ -15,6 +15,7 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
+# TODO REMOVE THIS BEFORE DEPLOYMENT
 CORS(app, origins=["http://localhost:3000"])
 
 # Initialize Firebase Admin SDK
