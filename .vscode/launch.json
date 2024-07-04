@@ -2,15 +2,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: Flask (appRun.py)",
+      "name": "Automatico Automation",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/appRun.py",
-      "console": "integratedTerminal",
-      "env": {
-        "FLASK_ENV": "development"
-      },
-      "args": []
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal"
     }
   ]
 }

@@ -24,7 +24,7 @@
   - `FLASK_ENV=development`
   - `FLASK_DEBUG=1`
 - Run your Flask app
-  - `flask run`
+  - `fastapi dev / fastapi run`
 
 ## Formatting and Linting
 

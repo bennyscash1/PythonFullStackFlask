@@ -4,22 +4,31 @@
   "python.testing.pytestEnabled": true,
   "cSpell.words": [
     "appium",
+    "Automatico",
     "Automator",
     "bennys",
     "Chromedriver",
+    "docstrings",
     "dotenv",
+    "fastapi",
     "firestore",
+    "jsonable",
     "locatore",
+    "pydantic",
     "udid",
     "userinputs",
+    "uvicorn",
     "Weblocatore",
     "webtest"
   ],
-  "python.analysis.extraPaths": [
-    "./WebTest/Flows",
-    "./WebTest/WebInfra",
-    "./WebTest/PageObject",
-    "./Mobile/MobileBasePage",
-    "./MobileTest/MobileBasePage"
-  ]
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "black-formatter.cwd": "${fileDirname}",
+  "flake8.cwd": "${fileDirname}",
+  "isort.check": true
 }

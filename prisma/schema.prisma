@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-py"
+  interface = "asyncio"
+  recursive_type_depth = 5
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  Test          Test[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Test {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  type        TestType
+  baseUrl     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  steps       Step[]
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Step {
+  id          String     @id @default(cuid())
+  order       Int
+  description String
+  type        StepType
+  xpath       String
+  userInput   String?
+  httpMethod  HttpMethod @default(GET)
+  queryParams Json?
+  bodyParams  Json?
+  headers     Json?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  testId      String
+  results     Result[]
+  test        Test       @relation(fields: [testId], references: [id])
+
+  @@unique([testId, order])
+}
+
+model Result {
+  id        String   @id @default(cuid())
+  success   Boolean
+  message   String?
+  createdAt DateTime @default(now())
+  stepId    String
+  step      Step     @relation(fields: [stepId], references: [id])
+}
+
+enum TestType {
+  WEB
+  MOBILE
+  API
+}
+
+enum StepType {
+  INPUT
+  BUTTON
+  ASSERTION
+}
+
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  DELETE
+  PATCH
+}
