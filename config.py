@@ -8,4 +8,4 @@ class Settings(BaseSettings):
     POSTGRES_PRISMA_URL: str
     auth_secret: str
 
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=".env.local")
