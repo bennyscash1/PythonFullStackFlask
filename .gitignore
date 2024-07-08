@@ -45,3 +45,5 @@ next-env.d.ts
 /templates/automat-frontend/node_modules
 /app/.next
 /app/node_modules
+
+.env
