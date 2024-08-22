@@ -92,22 +92,22 @@ async def run_test(test_id: str, user_data: Annotated[dict, Depends(decode_token
     # print(f"Received request for user: {user_data}, test_id: {test_id}")
     test_data = await prisma.test.find_unique(where={"id": test_id})
 
-    test_data_dict = test_data.dict()
+    if not test_data:
+        raise HTTPException(status_code=404, detail="Test not found")
+
+    test_data_dict = jsonable_encoder(test_data)
+    steps = await prisma.step.find_many(
+        where={"testId": test_id}, order={"order": "asc"}
+    )
+
+    if not steps:
+        raise HTTPException(status_code=400, detail="No steps found for this test")
+
     prepared_test_data = {
         "base_url": test_data_dict["baseUrl"],
-        "steps": await prisma.step.find_many(
-            where={"testId": test_id}, order={"order": "asc"}
-        ),
+        "steps": jsonable_encoder(steps),
     }
-    # test_data = None
-    # for doc in query:
-    #     test_data = doc.to_dict()
-    #     break
 
-    # if not test_data:
-    #     return jsonable_encoder({"error": "Test not found"}), 404
-
-    # # Run the test
     stdout = io.StringIO()
     stderr = io.StringIO()
     sys.stdout = stdout
@@ -131,7 +131,11 @@ async def run_test(test_id: str, user_data: Annotated[dict, Depends(decode_token
     stderr_output = stderr.getvalue()
 
     # return jsonable_encoder({"stdout": stdout_output, "stderr": stderr_output}), 200
-    return {"message": "Test run successful"}
+    return {
+        "message": "Test run successful",
+        "stdout": stdout_output,
+        "stderr": stderr_output,
+    }
 
 
 # Startup event to connect to the database
