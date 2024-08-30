@@ -9,7 +9,10 @@ class WebPage(WebBasePages):
         self.driver = driver 
     
     def open_page(self, url):
-        self.navigate_to_url(url)
+        if url:  # Check if the URL is not None or empty
+            self.navigate_to_url(url)
+        else:
+            print("URL is empty or None. Continuing with the existing browser instance.")
         return self
     ##Input data
     def enter_string(self, xpath, textInput):

@@ -39,6 +39,7 @@
 - Do not commit _pycache_, env (or other env file names like venv), pytest_cache folders to git.
 - Good to know: .env, .env.development, and .env.production files should be included in your repository as they define defaults. .env\*.local should be added to .gitignore, as those files are intended to be ignored. .env.local is where secrets can be stored.
 
+# MAKE SURE THE ENV.LOCAL INCLUDE IN YOUR ROOT SOURCE WITH THE CORRECT DATA (BY DEFOULT ITS NOT INCLUDE ON GIT)
 
 ## in order to run the server side
 # open terminal and run the next commands>
