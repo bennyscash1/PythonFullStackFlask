@@ -13,7 +13,7 @@ from functools import lru_cache
 from fastapi.encoders import jsonable_encoder
 from typing import Annotated, Optional
 from config import Settings
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, FastAPI, HTTPException, status, Body
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from pydantic import BaseModel
@@ -86,6 +86,82 @@ async def info(settings: Annotated[Settings, Depends(get_settings)]):
         "app_name": settings.app_name,
     }
 
+@app.post("/tests/run_multiple")
+async def run_multiple_tests(
+    test_ids: Annotated[list[str], Body(...)],
+    user_data: Annotated[dict, Depends(decode_token)],
+):
+    all_prepared_test_data = []
+    results = []
+    for test_id in test_ids:
+        try:
+            test_data = await prisma.test.find_unique(where={"id": test_id})
+
+            if not test_data:
+                raise HTTPException(status_code=404, detail="Test not found")
+
+            test_data_dict = jsonable_encoder(test_data)
+            steps = await prisma.step.find_many(
+                where={"testId": test_id}, order={"order": "asc"}
+            )
+
+            if not steps:
+                raise HTTPException(status_code=400, detail="No steps found for this test")
+
+            prepared_test_data = {
+                "base_url": test_data_dict["baseUrl"],
+                "steps": jsonable_encoder(steps),
+                "test_id": test_id,  # Include the test_id in the prepared data
+            }
+            all_prepared_test_data.append(prepared_test_data)
+
+        except HTTPException as e:
+            # Handle errors for individual tests if needed
+            pass  # Or you can collect errors and return them in the response
+
+    # Now, send all the prepared test data to pytest at once
+    stdout = io.StringIO()
+    stderr = io.StringIO()
+    sys.stdout = stdout
+    sys.stderr = stderr
+
+    try:
+        pytest.main(
+            [
+                "-x",
+                "WebTest/Test/test_web.py::test_login",  # Adjust if tests are in different files
+                "-vv",
+                "--test_data",
+                json.dumps(all_prepared_test_data),  # Send all test data
+            ]
+        )
+
+        stdout_output = stdout.getvalue()
+        stderr_output = stderr.getvalue()
+
+        # Assuming your pytest output provides information about individual test results
+        # You'll need to parse the output to extract results for each test_id
+
+        # Example: If pytest output contains lines like "test_id: <test_id>, status: <status>, message: <message>"
+        for line in stdout_output.splitlines():
+            if line.startswith("test_id:"):
+                parts = line.split(", ")
+                test_id = parts[0].split(": ")[1]
+                status = parts[1].split(": ")[1]
+                message = parts[2].split(": ")[1]
+                results.append({
+                    "test_id": test_id,
+                    "status": status,
+                    "message": message,
+                })
+
+    finally:
+        sys.stdout = sys.__stdout__
+        sys.stderr = sys.__stderr__
+
+    return results
+    
+    
 
 @app.post("/tests/{test_id}/run")
 async def run_test(test_id: str, user_data: Annotated[dict, Depends(decode_token)]):
